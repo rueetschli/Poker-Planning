@@ -65,5 +65,7 @@ Beispiel (mit `curl`):
 - **Chart.js:** [Chart.js](https://www.chartjs.org/) für die Visualisierung des Rundenverlaufs.
 
 Beides wird via CDN geladen, keine Registrierung oder Installation erforderlich.
+
+
 ![image](https://github.com/user-attachments/assets/6e837f13-aaf7-4df8-bf9d-14cf7fa5ebb6)
 
