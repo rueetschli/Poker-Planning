@@ -56,7 +56,7 @@ Ein einfaches Online-Poker-Planning-Tool, welches ohne Installation von Datenban
 Ein DELETE-Request an `backend/api.php` löscht alte Räume, die älter als 48 Stunden sind. Ein Cronjob könnte beispielsweise alle 24 Stunden diesen DELETE-Request ausführen.
 
 Beispiel (mit `curl`):  
-curl -X DELETE https://yourdomain.tld/backend/api.php
+`curl -X DELETE https://yourdomain.tld/backend/api.php`
 
 
 ## Quellen / Libraries
