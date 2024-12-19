@@ -1,3 +1,5 @@
+![image](https://github.com/user-attachments/assets/b383ed62-db01-40c3-88f0-1f4a7f720439)
+
 # Poker Planning Tool
 
 Ein einfaches Online-Poker-Planning-Tool, welches ohne Installation von Datenbanken oder zusätzlicher Software auf einfachem Webhosting läuft. 
@@ -63,3 +65,5 @@ Beispiel (mit `curl`):
 - **Chart.js:** [Chart.js](https://www.chartjs.org/) für die Visualisierung des Rundenverlaufs.
 
 Beides wird via CDN geladen, keine Registrierung oder Installation erforderlich.
+![image](https://github.com/user-attachments/assets/6e837f13-aaf7-4df8-bf9d-14cf7fa5ebb6)
+
