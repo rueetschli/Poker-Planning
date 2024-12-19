@@ -54,3 +54,12 @@ Ein einfaches Online-Poker-Planning-Tool, welches ohne Installation von Datenban
 Ein DELETE-Request an `backend/api.php` löscht alte Räume, die älter als 48 Stunden sind. Ein Cronjob könnte beispielsweise alle 24 Stunden diesen DELETE-Request ausführen.
 
 Beispiel (mit `curl`):  
+
+
+
+## Quellen / Libraries
+
+- **QRCode:** [qrcodejs](https://github.com/davidshimjs/qrcodejs) für das Erstellen des QR-Codes zum einfachen Teilen des Raum-Links.
+- **Chart.js:** [Chart.js](https://www.chartjs.org/) für die Visualisierung des Rundenverlaufs.
+
+Beides wird via CDN geladen, keine Registrierung oder Installation erforderlich.
