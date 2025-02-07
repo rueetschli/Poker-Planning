@@ -1,22 +1,17 @@
 <?php
 header('Content-Type: application/json');
 
-// Pfad zur JSON-Datei
 $dataFile = __DIR__ . '/rooms.json';
 
-// Sicherstellen, dass die JSON-Datei existiert
 if (!file_exists($dataFile)) {
     file_put_contents($dataFile, json_encode([]));
 }
 
-// Räume-Daten aus der JSON-Datei laden
 $rooms = json_decode(file_get_contents($dataFile), true);
-
 if (!is_array($rooms)) {
     $rooms = [];
 }
 
-// Definition der Poker-Sets
 $pokerSets = [
     'fibonacci' => [1, 2, 3, 5, 8, 13, 21],
     'tshirt' => ['XS', 'S', 'M', 'L', 'XL'],
@@ -24,7 +19,6 @@ $pokerSets = [
     'playing-cards' => [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A']
 ];
 
-// Hilfsfunktion zum Speichern mit Locking
 function saveRooms($dataFile, $rooms) {
     $fp = fopen($dataFile, 'c+');
     if (flock($fp, LOCK_EX)) {
@@ -36,14 +30,12 @@ function saveRooms($dataFile, $rooms) {
     fclose($fp);
 }
 
-// ** GET-Anfrage: Raumdaten abrufen **
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $roomName = $_GET['room'] ?? null;
     if ($roomName) {
         if (isset($rooms[$roomName])) {
             echo json_encode($rooms[$roomName]);
         } else {
-            // Raum existiert nicht - automatisch Fibonacci-Raum erstellen
             $rooms[$roomName] = [
                 'timestamp' => time(),
                 'participants' => [],
@@ -60,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     exit;
 }
 
-// ** POST-Anfrage **
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
     $roomName = $input['room'] ?? null;
@@ -70,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Parameter
     $userName = $input['user'] ?? null;
     $card = $input['card'] ?? null;
     $estimationType = $input['estimationType'] ?? null;
@@ -83,7 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $timerEnd = $input['timerEnd'] ?? null;
     $newStory = $input['newStory'] ?? null;
 
-    // Raum erstellen, falls er nicht existiert
     if (!isset($rooms[$roomName])) {
         if (!$estimationType || !isset($pokerSets[$estimationType])) {
             $estimationType = 'fibonacci';
@@ -98,7 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ];
     }
 
-    // User umbenennen
     if ($renameUser && $oldUser && $newUser) {
         if (isset($rooms[$roomName]['participants'][$oldUser])) {
             $oldCard = $rooms[$roomName]['participants'][$oldUser];
@@ -113,9 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Neue User-Story
     if ($newStory) {
-        // Alte Story wird verworfen: komplette History leeren, Teilnehmer zurücksetzen
         $rooms[$roomName]['participants'] = [];
         $rooms[$roomName]['revealed'] = false;
         $rooms[$roomName]['history'] = [];
@@ -123,9 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         unset($rooms[$roomName]['timerEnd']);
     }
 
-    // Neues Spiel (Neue Runde)
     if ($newGame) {
-        // Aktuelle Runde in History schieben, wenn aufgedeckt
         if ($rooms[$roomName]['revealed'] === true) {
             $rooms[$roomName]['history'][] = [
                 'timestamp' => time(),
@@ -133,20 +117,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'estimationType' => $rooms[$roomName]['estimationType']
             ];
         }
-
-        // Teilnehmer resetten, revealed zurücksetzen
         $rooms[$roomName]['participants'] = [];
         $rooms[$roomName]['revealed'] = false;
         unset($rooms[$roomName]['timerStart']);
         unset($rooms[$roomName]['timerEnd']);
     }
 
-    // Karten aufdecken
     if ($revealed !== null) {
         $rooms[$roomName]['revealed'] = $revealed;
     }
 
-    // Teilnehmer hinzufügen/ändern
     if ($userName) {
         if (!isset($rooms[$roomName]['participants'][$userName])) {
             $rooms[$roomName]['participants'][$userName] = null;
@@ -156,7 +136,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Timer setzen
     if ($timerStart && $timerEnd) {
         $rooms[$roomName]['timerStart'] = $timerStart;
         $rooms[$roomName]['timerEnd'] = $timerEnd;
@@ -167,7 +146,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-// ** DELETE-Anfrage: Alte Räume bereinigen **
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $now = time();
     $rooms = array_filter($rooms, function ($room) use ($now) {
@@ -178,5 +156,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     exit;
 }
 
-// Fallback
 echo json_encode(['error' => 'Ungueltige Anfrage']);
