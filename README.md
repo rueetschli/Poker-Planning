@@ -6,7 +6,9 @@
 Ein einfaches Online-Poker-Planning-Tool, welches ohne Installation von Datenbanken oder zusätzlicher Software auf einfachem Webhosting läuft. 
 
 ## Was ist Poker Planning?
-Ich habe darüber einen Blogpost erfasst. Hier gibt es Anleitungen und Hintergrundwissen zum Thema: https://www.rueetschli.net/p/planning-poker-aufwandsschaetzung
+Ich habe darüber einen Blogpost erfasst: [Erfahre alles über Poker Planning - Den Sinn, die Herausforderungen und den Ablauf]([https://pp.rueetschli.dev/](https://www.rueetschli.net/p/planning-poker-aufwandsschaetzung)
+
+Oder teste Poker-Planning gleich hier auf meiner Dev-Umgebung: https://pp.rueetschli.dev/
 
 ## Features
 
