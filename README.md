@@ -1,4 +1,5 @@
-![image](https://github.com/user-attachments/assets/b383ed62-db01-40c3-88f0-1f4a7f720439)
+<img width="295" alt="image" src="https://github.com/user-attachments/assets/3c6f6f75-7982-4ea3-aa99-8d6df309e035" />
+
 
 # Poker Planning Tool
 
